@@ -5,8 +5,19 @@ from disposable_email_domains import blocklist
 import smtplib
 import dns.resolver
 import requests
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+# Configuración de CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Puedes restringir esto a dominios específicos en producción
+    allow_credentials=True,
+    allow_methods=["*"],  # Permite todos los métodos (GET, POST, etc.)
+    allow_headers=["*"],  # Permite todos los headers
+)
 
 # Modelo para recibir el email
 class EmailRequest(BaseModel):
